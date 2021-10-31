@@ -21,16 +21,15 @@ export class FeedService {
     for ( const feed of feeds ) {
 
       const isCreatedByCC = await this.feedRepository.isCreatedByCC(feed.pk, auth.pk);
-      
+
       feedList.push({
         id: feed.pk,
-        image : feed.image_versions2.candidates[0].url,
-        image2 : feed.image_versions2.candidates[1].url,
+        image : feed.image_versions2?.candidates[0].url,
+        image2 : feed.image_versions2?.candidates[1].url,
         caption : feed.caption.text,
         createdByCC : isCreatedByCC
       });
     }
-
     return feedList;
   }
   

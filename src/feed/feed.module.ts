@@ -7,6 +7,7 @@ import { FeedService } from './feed.service';
 @Module({
   imports: [TypeOrmModule.forFeature([FeedRepository])],
   controllers: [FeedController],
-  providers: [FeedService]
+  providers: [FeedService],
+  exports: [FeedService]
 })
 export class FeedModule {}
