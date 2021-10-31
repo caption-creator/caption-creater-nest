@@ -39,7 +39,7 @@ export class AiService {
       });
 
       const object = {
-        hashtag : hashtag,
+        hashtag : hashtag.slice(0 ,-2),
         caption : item.caption.replace(/\n/g, '')
       };
       captionAndHashtag.push(object);
@@ -50,7 +50,21 @@ export class AiService {
       prompt = prompt + data.hashtag + ' : ' + data.caption + '\n';
     }
 
-    return captionAndHashtag;
+    const getNlpResult = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
+      "prompt": `generator that makes a post on SNS, including keywords.\n\n${prompt}\n${keywordList.join(', ')} :`,
+      "temperature": 0.2,
+      "max_tokens": 100,
+      "top_p": 1,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "stop": ["\n"]
+    }, {
+      headers : {
+        "Authorization": process.env.OPEN_AI_KEY 
+      }
+    });
+
+    return getNlpResult.data.choices[0].text;
   }
 
   async image(imageLink) {
