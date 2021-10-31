@@ -7,7 +7,7 @@ export class AiController {
   constructor(private readonly aiService: AiService) {}
 
   @Post("/writing")
-  async writing(@Body("keywrodList") keywordList: string, @Body("id") id: string, @Body("pwd") pwd: string) {
+  async writing(@Body("keywordList") keywordList: string, @Body("id") id: string, @Body("pwd") pwd: string) {
     return await this.aiService.writing(keywordList, id, pwd);
   }
 

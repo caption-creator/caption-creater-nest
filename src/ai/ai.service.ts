@@ -58,7 +58,7 @@ export class AiService {
       keyFilename: 'src/config/google-vision.json'
     });
   
-    const [result] = await client.objectLocalization(imageLink);
+    const [result] = await client.objectLocalization(encodeURI(imageLink));
     const objects = result.localizedObjectAnnotations;
   
     const itemList = [];
