@@ -5,8 +5,8 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/instagram')
-  async instagram() {
-    return this.authService.instagram();
+  @Post('/')
+  async login() {
+    return this.authService.login();
   }
 }

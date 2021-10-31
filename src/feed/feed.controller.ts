@@ -10,24 +10,8 @@ export class FeedController {
     return this.feedService.readFeeds();
   }
 
-  @Get(':feedId')
-  async readFeed() {
-    return this.feedService.readFeed();
-  }
-
-
-  @Get('/other')
-  async readOtherFeed() {
-    return this.feedService.readOtherFeed()
-  }
-
   @Post()
   async createFeed() {
     return this.feedService.createFeed()
-  }
-
-  @Post('/ai')
-  async createAIFeed() {
-    return this.feedService.createAIFeed();
   }
 }
