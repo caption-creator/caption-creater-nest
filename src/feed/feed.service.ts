@@ -9,8 +9,7 @@ export class FeedService {
   constructor(private readonly feedRepository: FeedRepository) {}
 
   
-  async readFeeds(body) {
-    const {id, pwd} = body;
+  async readFeeds(id, pwd) {
 
     const ig = new IgApiClient();
     ig.state.generateDevice(id);

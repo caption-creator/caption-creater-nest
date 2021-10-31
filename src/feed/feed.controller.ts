@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { FeedService } from './feed.service';
 
 @Controller('feed')
@@ -6,8 +6,8 @@ export class FeedController {
   constructor(private readonly feedService : FeedService) {}
   
   @Get()
-  async readFeeds(@Body() body) {
-    return this.feedService.readFeeds(body);
+  async readFeeds(@Query("id") id: string, @Query("pwd") pwd: string) {
+    return this.feedService.readFeeds(id, pwd);
   }
 
   @Post("/")
