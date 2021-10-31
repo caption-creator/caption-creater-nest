@@ -25,11 +25,18 @@
     "@nestjs/config": "^1.0.2",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",
+    "@nestjs/typeorm": "^8.0.2",
     "axios": "^0.24.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
     "instagram-private-api": "^1.45.1",
+    "mysql2": "^2.3.2",
     "reflect-metadata": "^0.1.13",
+    "request-promise": "^4.2.6",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.6"
+    "rxjs": "^7.4.0",
+    "typeorm": "^0.2.38",
+    "typeorm-transactional-cls-hooked": "^0.1.21"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",
