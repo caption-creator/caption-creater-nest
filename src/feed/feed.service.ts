@@ -21,15 +21,33 @@ export class FeedService {
     for ( const feed of feeds ) {
 
       const isCreatedByCC = await this.feedRepository.isCreatedByCC(feed.pk, auth.pk);
+      let temporaryObject = {};
 
-      feedList.push({
-        id: feed.pk,
-        image : feed.image_versions2?.candidates[0].url,
-        image2 : feed.image_versions2?.candidates[1].url,
-        caption : feed.caption.text,
-        createdByCC : isCreatedByCC
-      });
+      if ( feed.carousel_media_count !== undefined && feed?.carousel_media_count > 1 ) {
+        const imageList = [];
+        for(let i = 0; i < feed.carousel_media_count ; i++ ) {
+          imageList.push(feed.carousel_media[i].image_versions2.candidates[0].url);
+        }
+
+        temporaryObject = {
+          id: feed.pk,
+          imageList : imageList,
+          caption : feed.caption.text,
+          createdByCC : isCreatedByCC
+        }
+      } else {
+        temporaryObject = {
+          id: feed.pk,
+          image : feed.image_versions2?.candidates[0].url,
+          image2 : feed.image_versions2?.candidates[1].url,
+          caption : feed.caption.text,
+          createdByCC : isCreatedByCC
+        }
+      }
+
+      feedList.push(temporaryObject);
     }
+    
     return feedList;
   }
   
