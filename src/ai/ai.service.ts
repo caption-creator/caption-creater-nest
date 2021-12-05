@@ -104,13 +104,16 @@ export class AiService {
       keyFilename: 'src/config/google-vision.json'
     });
   
-    const [result] = await client.objectLocalization(encodeURI(imageLink));
-    const objects = result.localizedObjectAnnotations;
+    const [result] = await client.labelDetection(encodeURI(imageLink));
+    // const objects = result.localizedObjectAnnotations;
+    const objects = result.labelAnnotations;
+
+    console.log(result);
   
     const itemList = [];
   
     for (const item of objects) {
-      const itemKo = await this.translate(item.name);
+      const itemKo = await this.translate(item.description);
       itemList.push(itemKo);
     }
     return itemList;
