@@ -2,10 +2,29 @@ import { Injectable } from '@nestjs/common';
 import vision from '@google-cloud/vision';
 import axios from 'axios';
 import { FeedService } from '../feed/feed.service';
+import * as fs from 'fs';
+import request from 'request';
+
 @Injectable()
 export class AiService {
 
   constructor(private readonly feedService: FeedService) {}
+
+
+
+  download_image  = (url, image_path) =>
+  axios({
+    url,
+    responseType: 'stream',
+  }).then(
+    response =>
+      new Promise((resolve, reject) => {
+        response.data
+          .pipe(fs.createWriteStream(image_path))
+          .on('finish', () => resolve(''))
+          .on('error', e => reject(e));
+      }),
+  );
 
   async translate (keyword) {
     const result = await axios.post('https://naveropenapi.apigw.ntruss.com/nmt/v1/translation',
@@ -103,9 +122,12 @@ export class AiService {
     const client = new vision.ImageAnnotatorClient({
       keyFilename: 'src/config/google-vision.json'
     });
+
+
+    const random = Math.floor(Math.random() * 1000);
+    await this.download_image(imageLink,`./src/image/${random}.jpg`);
   
-    const [result] = await client.labelDetection(encodeURI(imageLink));
-    // const objects = result.localizedObjectAnnotations;
+    const [result] = await client.labelDetection(encodeURI(`./src/image/${random}.jpg`));
     const objects = result.labelAnnotations;
 
     console.log(result);
@@ -118,4 +140,27 @@ export class AiService {
     }
     return itemList;
   }
+
+  // async image(imageLink) {
+  //   const client = new vision.ImageAnnotatorClient({
+  //     keyFilename: 'src/config/google-vision.json'
+  //   });
+
+  //   const random = Math.floor(Math.random() * 1000);
+
+  //   await this.download_image(imageLink,`./src/image/${random}.jpg`);
+
+  //   const [result] = await client.objectLocalization(`./src/image/${random}.jpg`);
+  //   const objects = result.localizedObjectAnnotations;
+
+  //   console.log(result);
+
+  //   const itemList = [];
+
+  //   for (const item of objects) {
+  //     const itemKo = await this.translate(item.name);
+  //     itemList.push(itemKo);
+  //   }
+  //   return itemList;
+  // }
 }
