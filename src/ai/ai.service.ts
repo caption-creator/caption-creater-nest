@@ -46,7 +46,7 @@ export class AiService {
   async typeWriting(keywordList, type) {
     let userPrompt = '';
     for (const data of keywordList) {
-      userPrompt = userPrompt + data + ',';
+      userPrompt = userPrompt + data + ', ';
     }
 
     let prompt = "";
@@ -60,8 +60,8 @@ export class AiService {
 
     const getNlpResult = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
       "prompt": prompt,
-      "temperature": 0.2,
-      "max_tokens": 100,
+      "temperature": 0.7,
+      "max_tokens": 200,
       "top_p": 1,
       "frequency_penalty": 0,
       "presence_penalty": 0,
@@ -103,8 +103,8 @@ export class AiService {
 
     const getNlpResult = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
       "prompt": `generator that makes a post on SNS, including keywords.\n\n${prompt}\n${keywordList.join(', ')} :`,
-      "temperature": 0.2,
-      "max_tokens": 100,
+      "temperature": 0.7,
+      "max_tokens": 200,
       "top_p": 1,
       "frequency_penalty": 0,
       "presence_penalty": 0,
